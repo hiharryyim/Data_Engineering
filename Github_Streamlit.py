@@ -21,7 +21,7 @@ def get_api_key():
     if 'user_api_key' in st.session_state and st.session_state.user_api_key:
         return st.session_state.user_api_key
     
-    # 2. 再看 Streamlit Secrets 里有没有配置 (这是你的 Key)
+    # 2.获取我内定的key
     if "GEMINI_API_KEY" in st.secrets:
         return st.secrets["GEMINI_API_KEY"]
     
@@ -121,8 +121,8 @@ if 'current_keyword' not in st.session_state: st.session_state.current_keyword =
 # 2. 侧边栏：API Key 配置
 # ==========================================
 with st.sidebar:
-    st.header("🔑 AI Settings")
-    st.markdown("Use your own LLM API Key for privacy, or leave blank to use the hosted (Gemini 2.5 Flash) key.")
+    st.header("🔑 Gemini Settings")
+    st.markdown("Our AI Summary Built on Google Gemini, you can use your own Gemini API Key for privacy, or leave blank to use the hosted (Gemini 2.5 Flash) key.")
     
     # 用户输入 Key (存入 session_state)
     st.text_input(
