@@ -132,9 +132,8 @@ if 'current_keyword' not in st.session_state: st.session_state.current_keyword =
 @st.cache_resource
 def init_connection():
     try:
-        # 从 Streamlit 密钥库读取连接字符串
-        mongo_uri = st.secrets["MONGO_URI"]
-        client = MongoClient(mongo_uri)
+        connection_string = "mongodb+srv://yd2872_db_user:Tn9xtxFuKDaSNd71@cluster0.fpiqkdu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+        client = MongoClient(connection_string)
         return client
     except Exception as e:
         st.error(f"MongoDB Connection Error: {e}")
