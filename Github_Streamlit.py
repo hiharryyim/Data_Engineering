@@ -15,8 +15,18 @@ st.set_page_config(
     layout="wide"
 )
 
-# Gemini API Key
-MY_API_KEY = "AIzaSyCXF_UHRSSflJA9R0bzrrTndMVzfa7X9OY"
+# 定义一个获取 Key 的函数
+def get_api_key():
+    # 1. 先看 Sidebar 有没有用户输入
+    if 'user_api_key' in st.session_state and st.session_state.user_api_key:
+        return st.session_state.user_api_key
+    
+    # 2. 再看 Streamlit Secrets 里有没有配置 (这是你的 Key)
+    if "GEMINI_API_KEY" in st.secrets:
+        return st.secrets["GEMINI_API_KEY"]
+    
+    # 3. 都没有
+    return None
 
 # --- CSS 页面视觉设计 ---
 st.markdown("""
@@ -107,6 +117,27 @@ if 'matched_sentiments' not in st.session_state: st.session_state.matched_sentim
 if 'llm_report_summary' not in st.session_state: st.session_state.llm_report_summary = None
 if 'llm_report_details' not in st.session_state: st.session_state.llm_report_details = None
 if 'current_keyword' not in st.session_state: st.session_state.current_keyword = ""
+
+# 2. 侧边栏：API Key 配置
+# ==========================================
+with st.sidebar:
+    st.header("🔑 AI Settings")
+    st.markdown("Use your own Gemini API Key for privacy, or leave blank to use the hosted key.")
+    
+    # 用户输入 Key (存入 session_state)
+    st.text_input(
+        "Enter your Gemini API Key:", 
+        type="password", 
+        key="user_api_key",
+        help="Get one from aistudio.google.com"
+    )
+
+# 获取最终使用的 Key
+MY_API_KEY = get_api_key()
+
+# 检查 Key 是否存在 (用于后续判断)
+if not MY_API_KEY:
+    st.warning("⚠️ No API Key found! AI features will be disabled. Please check Streamlit Secrets or enter a key.")
 
 # ==========================================
 # 2. 数据库连接
