@@ -17,7 +17,7 @@ st.set_page_config(
 
 # 定义一个获取 Key 的函数
 def get_api_key():
-    # 1. 先看 Sidebar 有没有用户输入
+    # 1. 检测用户输入
     if 'user_api_key' in st.session_state and st.session_state.user_api_key:
         return st.session_state.user_api_key
     
@@ -122,7 +122,7 @@ if 'current_keyword' not in st.session_state: st.session_state.current_keyword =
 # ==========================================
 with st.sidebar:
     st.header("🔑 AI Settings")
-    st.markdown("Use your own Gemini API Key for privacy, or leave blank to use the hosted key.")
+    st.markdown("Use your own LLM API Key for privacy, or leave blank to use the hosted (Gemini 2.5 Flash) key.")
     
     # 用户输入 Key (存入 session_state)
     st.text_input(
