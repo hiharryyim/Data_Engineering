@@ -122,7 +122,7 @@ if 'current_keyword' not in st.session_state: st.session_state.current_keyword =
 # ==========================================
 with st.sidebar:
     st.header("🔑 Gemini Settings")
-    st.markdown("Our AI Summary Built on Google Gemini, you can use your own Gemini API Key for privacy, or leave blank to use the hosted (Gemini 2.5 Flash) key.")
+    st.markdown("Use your own Gemini API Key for privacy, or leave blank to use the hosted (Gemini 2.5 Flash) key.")
     
     # 用户输入 Key (存入 session_state)
     st.text_input(
@@ -145,9 +145,15 @@ if not MY_API_KEY:
 @st.cache_resource
 def init_connection():
     try:
-        connection_string = "mongodb+srv://yd2872_db_user:Tn9xtxFuKDaSNd71@cluster0.fpiqkdu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-        client = MongoClient(connection_string)
-        return client
+        # 1. 从Streamlit Secrets 读取连接字符串
+        if "MONGO_URI" in st.secrets:
+            client = MongoClient(st.secrets["MONGO_URI"])
+            return client
+        else:
+            # 报错
+            st.error("🚨 MongoDB URL not found in Secrets! Please check your configuration.")
+            return None
+            
     except Exception as e:
         st.error(f"MongoDB Connection Error: {e}")
         return None
