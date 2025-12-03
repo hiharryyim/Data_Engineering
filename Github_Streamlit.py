@@ -16,25 +16,7 @@ st.set_page_config(
 )
 
 # Gemini API Key
-with st.sidebar:
-    st.header("🔑 AI Settings")
-    st.markdown("Use your own Gemini API Key for faster/private access, or leave blank to use the hosted key.")
-    
-    # 1. 获取用户输入
-    user_api_key = st.text_input("Enter your Gemini API Key:", type="password", help="Get one from aistudio.google.com")
-    
-    # 2. 逻辑判断：决定最终使用哪个 Key
-    if user_api_key:
-        FINAL_API_KEY = user_api_key
-        st.success("Using your personal API Key!")
-    else:
-        # 尝试从 Secrets 获取你的 Key (部署时配置)
-        if "GEMINI_API_KEY" in st.secrets:
-            FINAL_API_KEY = st.secrets["GEMINI_API_KEY"]
-            st.info("Using hosted system API Key.")
-        else:
-            FINAL_API_KEY = ""
-            st.warning("⚠️ No API Key found. AI features will not work.")
+MY_API_KEY = "AIzaSyCXF_UHRSSflJA9R0bzrrTndMVzfa7X9OY"
 
 # --- CSS 页面视觉设计 ---
 st.markdown("""
