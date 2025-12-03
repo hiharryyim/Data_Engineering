@@ -147,7 +147,7 @@ def init_connection():
     try:
         # 1. 从Streamlit Secrets 读取连接字符串
         if "MONGO_URI" in st.secrets:
-            client = MongoClient(st.secrets["MONGO_URI"])
+            client = MongoClient(st.secrets[MONGO_URI])
             return client
         else:
             # 报错
