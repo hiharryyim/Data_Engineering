@@ -414,7 +414,7 @@ if st.session_state.df_result is not None and not st.session_state.df_result.emp
         st.subheader("🤖 Executive Market Insight")
         
         if st.session_state.llm_report_summary is None:
-            st.info(f"Generate concise insights for **{len(df_res)}** movies using Gemini 2.5 Flash.")
+            st.info(f"Generate concise insights for **{len(df_res)}** movies using Gemini.")
             
             if st.button("✨ Generate Executive Report", key="btn_gen_ai"):
                 with st.spinner("Analyzing market data & sentiments..."):
